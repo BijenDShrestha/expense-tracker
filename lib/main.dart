@@ -44,7 +44,7 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        // mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           Container(
@@ -52,6 +52,31 @@ class _MyHomePageState extends State<MyHomePage> {
             child: Card(
               color: Colors.blue,
               child: Text('CHART!'),
+            ),
+          ),
+          Card(
+            child: Container(
+              padding: EdgeInsets.all(10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  TextField(
+                    decoration: InputDecoration(labelText: 'Title'),
+                  ),
+                  TextField(
+                    decoration: InputDecoration(labelText: 'Amount'),
+                  ),
+                  FlatButton(
+                    onPressed: () {
+                      print('button click');
+                    },
+                    child: Text(
+                      'Add Transaction',
+                      style: TextStyle(color: Colors.purple),
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
           Column(
@@ -90,8 +115,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             color: Colors.black,
                           ),
                         ),
-                        Text(
-                          DateFormat('yyyy-MM-dd').format(txn.date),
+                        Text(DateFormat('yyyy-MM-dd').format(txn.date),
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 13,
