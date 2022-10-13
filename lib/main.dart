@@ -1,5 +1,6 @@
 import 'transaction.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 void main() {
   runApp(const MyApp());
@@ -70,7 +71,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       )),
                       padding: EdgeInsets.all(10),
                       child: Text(
-                        txn.amount.toString(),
+                        '\$${txn.amount}',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 20,
@@ -86,13 +87,14 @@ class _MyHomePageState extends State<MyHomePage> {
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 15,
-                            color: Colors.grey,
+                            color: Colors.black,
                           ),
                         ),
-                        Text(txn.date.toString(),
+                        Text(
+                          DateFormat('yyyy-MM-dd').format(txn.date),
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              fontSize: 15,
+                              fontSize: 13,
                               color: Colors.grey,
                             ))
                       ],
