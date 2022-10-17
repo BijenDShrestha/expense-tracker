@@ -1,9 +1,8 @@
-import './widgets/user_transaction.dart';
-
 import './widgets/new_transaction.dart';
 
 import './widgets/transaction_list.dart';
 import 'package:flutter/material.dart';
+import './models/transaction.dart';
 
 void main() {
   runApp(const MyApp());
@@ -35,30 +34,61 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  // String titleInput = "";
+  // String amountInput = "";
 
-  String titleInput = "";
-  String amountInput = "";
+
+final List<Transaction> _userTransactions = [
+    Transaction(id: 't1', title: 'Shoes', amount: 99.99, date: DateTime.now()),
+    Transaction(id: 't2', title: 'Jacket', amount: 199.99, date: DateTime.now())
+  ];
+
+  void _addNewTxn(String txnTitle, double txnAmount) {
+    final newTxn = Transaction(
+        id: DateTime.now().toString(),
+        title: txnTitle,
+        amount: txnAmount,
+        date: DateTime.now());
+
+    setState(() {
+      _userTransactions.add(newTxn);
+    });
+  }
+
+  void _startAddNewTransaction(BuildContext ctx) {
+    showModalBottomSheet(context: ctx, builder: (_) {
+      return NewTransaction(_addNewTxn);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
+        actions: [IconButton(onPressed: () => _startAddNewTransaction(context), icon: Icon(Icons.add))],
       ),
-      body: Column(
-        // mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          Container(
-            width: double.infinity,
-            child: Card(
-              color: Colors.blue,
-              child: Text('CHART!'),
+      body: SingleChildScrollView(
+        child: Column(
+          // mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            Container(
+              width: double.infinity,
+              child: Card(
+                color: Colors.blue,
+                child: Text('CHART!'),
+              ),
             ),
-          ),
-          UserTransaction()
-        ],
+            TransactionList(_userTransactions),
+          ],
+        ),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () => _startAddNewTransaction(context),
+        ),
     );
   }
 }
