@@ -54,8 +54,8 @@ class _MyHomePageState extends State<MyHomePage> {
   // String amountInput = "";
 
   final List<Transaction> _userTransactions = [
-    Transaction(id: 't1', title: 'Shoes', amount: 99.99, date: DateTime.now()),
-    Transaction(id: 't2', title: 'Jacket', amount: 199.99, date: DateTime.now())
+    // Transaction(id: 't1', title: 'Shoes', amount: 99.99, date: DateTime.now()),
+    // Transaction(id: 't2', title: 'Jacket', amount: 199.99, date: DateTime.now())
   ];
 
   void _addNewTxn(String txnTitle, double txnAmount) {
