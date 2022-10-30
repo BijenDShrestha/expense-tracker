@@ -21,38 +21,38 @@ class _NewTransactionState extends State<NewTransaction> {
   @override
   Widget build(BuildContext context) {
     return Card(
-            child: Container(
-              padding: EdgeInsets.all(10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  TextField(
-                    decoration: InputDecoration(labelText: 'Title'),
-                    // onChanged: (value) {titleInput = value;},
-                    controller: titleController,
-                    onSubmitted: (_) => submitData(),
-                  ),
-                  TextField(
-                    decoration: InputDecoration(labelText: 'Amount'),
-                    // onChanged: (value) => amountInput = value,
-                    controller: amountController,
-                    keyboardType: TextInputType.number,
-                    onSubmitted: (_) => submitData(),
-                  ),
-                  FlatButton(
-                    onPressed: 
-                      // print(titleController.text);
-                      // print(amountController.text);
-                      submitData,
-                    child: Text(
-                      'Add Transaction',
-                      style: TextStyle(color: Colors.purple),
-                    ),
-                  )
-                ],
-              ),
+      child: Container(
+        padding: EdgeInsets.all(10),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            TextField(
+              decoration: InputDecoration(labelText: 'Title'),
+              // onChanged: (value) {titleInput = value;},
+              controller: titleController,
+              onSubmitted: (_) => submitData(),
             ),
-          );
+            TextField(
+              decoration: InputDecoration(labelText: 'Amount'),
+              // onChanged: (value) => amountInput = value,
+              controller: amountController,
+              keyboardType: TextInputType.number,
+              onSubmitted: (_) => submitData(),
+            ),
+            FlatButton(
+              onPressed:
+                  // print(titleController.text);
+                  // print(amountController.text);
+                  submitData,
+              child: Text(
+                'Add Transaction',
+                style: TextStyle(color: Colors.purple),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
   }
 
   void submitData() {
@@ -63,10 +63,8 @@ class _NewTransactionState extends State<NewTransaction> {
       return;
     }
 
-    widget.addTx(enteredTitle, 
-    enteredAmount);
+    widget.addTx(enteredTitle, enteredAmount);
 
     Navigator.of(context).pop();
-    
   }
 }

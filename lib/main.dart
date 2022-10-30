@@ -19,6 +19,21 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
         accentColor: Colors.amber,
+        fontFamily: 'Roboto',
+        textTheme: ThemeData.light().textTheme.copyWith(
+              headline6: TextStyle(
+                fontFamily: 'OpenSans',
+                fontSize: 18,
+              ),
+            ),
+        appBarTheme: AppBarTheme(
+          textTheme: ThemeData.light().textTheme.copyWith(
+                headline6: TextStyle(
+                  fontFamily: 'OpenSans',
+                  fontSize: 20,
+                ),
+              ),
+        ),
       ),
       home: const MyHomePage(title: 'Expense Tracker'),
     );
@@ -38,8 +53,7 @@ class _MyHomePageState extends State<MyHomePage> {
   // String titleInput = "";
   // String amountInput = "";
 
-
-final List<Transaction> _userTransactions = [
+  final List<Transaction> _userTransactions = [
     Transaction(id: 't1', title: 'Shoes', amount: 99.99, date: DateTime.now()),
     Transaction(id: 't2', title: 'Jacket', amount: 199.99, date: DateTime.now())
   ];
@@ -57,9 +71,11 @@ final List<Transaction> _userTransactions = [
   }
 
   void _startAddNewTransaction(BuildContext ctx) {
-    showModalBottomSheet(context: ctx, builder: (_) {
-      return NewTransaction(_addNewTxn);
-    });
+    showModalBottomSheet(
+        context: ctx,
+        builder: (_) {
+          return NewTransaction(_addNewTxn);
+        });
   }
 
   @override
@@ -67,7 +83,11 @@ final List<Transaction> _userTransactions = [
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
-        actions: [IconButton(onPressed: () => _startAddNewTransaction(context), icon: Icon(Icons.add))],
+        actions: [
+          IconButton(
+              onPressed: () => _startAddNewTransaction(context),
+              icon: Icon(Icons.add))
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -89,7 +109,7 @@ final List<Transaction> _userTransactions = [
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () => _startAddNewTransaction(context),
-        ),
+      ),
     );
   }
 }
