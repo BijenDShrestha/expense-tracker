@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:expense_tracker/widgets/chart_bar.dart';
 
 import '../models/transaction.dart';
@@ -15,26 +17,29 @@ class Chart extends StatelessWidget {
   Chart(this.recentTransactions);
 
   List<Map<String, Object>> get groupedTransactionValues {
-      return List.generate(7, (index) {
-        final weekDay = DateTime.now().subtract(Duration(days: index));
+    return List.generate(7, (index) {
+      final weekDay = DateTime.now().subtract(Duration(days: index));
 
-        double totalSum = 0.0;
+      double totalSum = 0.0;
 
-        for(var i=0; i < recentTransactions.length; i++) {
-          if (recentTransactions[i].date.day == weekDay.day &&
-          recentTransactions[i].date.month == weekDay.month &&
-          recentTransactions[i].date.year == weekDay.year) 
-          {
-            totalSum += recentTransactions[i].amount;
-          }
+      for (var i = 0; i < recentTransactions.length; i++) {
+        if (recentTransactions[i].date.day == weekDay.day &&
+            recentTransactions[i].date.month == weekDay.month &&
+            recentTransactions[i].date.year == weekDay.year) {
+          totalSum += recentTransactions[i].amount;
         }
-
-        print(DateFormat.E().format(weekDay));
-        print(totalSum);
-
-        return {'day': DateFormat.E().format(weekDay), 'amount': totalSum};
       }
-      );
+
+      // print(DateFormat.E().format(weekDay));
+      // print(totalSum);
+
+      return {'day': DateFormat.E().format(weekDay), 'amount': totalSum};
+    });
+  }
+
+  double get totalSpending {
+    return groupedTransactionValues.fold(
+        0.0, (sum, item) => sum + double.parse(item['amount'].toString()));
   }
 
   @override
@@ -42,13 +47,23 @@ class Chart extends StatelessWidget {
     return Card(
       elevation: 6,
       margin: EdgeInsets.all(20),
-      child: Row(
-        // children: groupedTransactionValues.map((data) => Text('${data['day']}: ${data['amount']}'))
-        // .toList(),
-        children: 
-          groupedTransactionValues.map((data) => ChartBar(data['day'].toString(), 
-          double.parse(data['amount'].toString()), 
-          0.5)).toList()
+      child: Padding(
+        padding: EdgeInsets.all(10),
+        child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            // children: groupedTransactionValues.map((data) => Text('${data['day']}: ${data['amount']}'))
+            // .toList(),
+            children: groupedTransactionValues
+                .map((data) => Flexible(
+                  fit: FlexFit.tight,
+                  child: ChartBar(
+                      data['day'].toString(),
+                      double.parse(data['amount'].toString()),
+                      totalSpending == 0.0
+                          ? 0.0
+                          : (data['amount'] as double) / totalSpending),
+                ))
+                .toList()),
       ),
     );
   }
