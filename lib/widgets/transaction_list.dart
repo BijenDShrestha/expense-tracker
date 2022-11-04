@@ -10,8 +10,9 @@ class TransactionList extends StatelessWidget {
   // const TransactionList({Key? key}) : super(key: key);
 
   final List<Transaction> transactions;
+  final Function deleteTxn;
 
-  TransactionList(this.transactions);
+  TransactionList(this.transactions, this.deleteTxn);
 
   @override
   Widget build(BuildContext context) {
@@ -60,8 +61,10 @@ class TransactionList extends StatelessWidget {
                       DateFormat.yMMMEd().format(transactions[index].date),
                     ),
                 
-                    trailing: Text(
-                      'delete icon'
+                    trailing: IconButton(
+                      icon: Icon(Icons.delete),
+                      color: Theme.of(context).errorColor,
+                      onPressed: () => deleteTxn(transactions[index].id),
                     ),
                 
                   ),
