@@ -24,12 +24,11 @@ class MyApp extends StatelessWidget {
         // errorColor: Colors.red,
         fontFamily: 'Roboto',
         textTheme: ThemeData.light().textTheme.copyWith(
-              headline6: TextStyle(
-                fontFamily: 'OpenSans',
-                fontSize: 18,
-              ),
-              button: TextStyle(color: Colors.white)
+            headline6: TextStyle(
+              fontFamily: 'OpenSans',
+              fontSize: 18,
             ),
+            button: TextStyle(color: Colors.white)),
         appBarTheme: AppBarTheme(
           textTheme: ThemeData.light().textTheme.copyWith(
                 headline6: TextStyle(
@@ -75,9 +74,9 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void _deleteTxn(String id) {
-      setState(() {
-        _userTransactions.removeWhere((txn) => txn.id == id);
-      });
+    setState(() {
+      _userTransactions.removeWhere((txn) => txn.id == id);
+    });
   }
 
   void _startAddNewTransaction(BuildContext ctx) {
@@ -93,29 +92,40 @@ class _MyHomePageState extends State<MyHomePage> {
       return tx.date.isAfter(
         DateTime.now().subtract(
           Duration(days: 7),
-          ),
-          );
+        ),
+      );
     }).toList();
   }
 
   @override
   Widget build(BuildContext context) {
+    final appBar = AppBar(
+      title: Text(widget.title),
+      actions: [
+        IconButton(
+            onPressed: () => _startAddNewTransaction(context),
+            icon: Icon(Icons.add))
+      ],
+    );
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-        actions: [
-          IconButton(
-              onPressed: () => _startAddNewTransaction(context),
-              icon: Icon(Icons.add))
-        ],
-      ),
+      appBar: appBar,
       body: SingleChildScrollView(
         child: Column(
           // mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Chart(_recentTransactions),
-            TransactionList(_userTransactions, _deleteTxn),
+            Container(
+                height: (MediaQuery.of(context).size.height -
+                        appBar.preferredSize.height -
+                        MediaQuery.of(context).padding.top) *
+                    0.4,
+                child: Chart(_recentTransactions)),
+            Container(
+                height: (MediaQuery.of(context).size.height -
+                        appBar.preferredSize.height - 
+                        MediaQuery.of(context).padding.top) *
+                    0.6,
+                child: TransactionList(_userTransactions, _deleteTxn)),
           ],
         ),
       ),
